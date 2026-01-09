@@ -1,0 +1,18 @@
+.auth-container {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.auth-container input {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 0.7rem;
+}

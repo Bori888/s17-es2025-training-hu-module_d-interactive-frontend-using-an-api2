@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Laravel
+/vendor/
+/.env
+.phpunit.result.cache
+/storage/*.key
+/storage/framework/cache/data/*
+/storage/logs/*
+/bootstrap/cache/*.php
+
+# OS fájlok
+.DS_Store
+Thumbs.db
+
+# IDE / editor
+.vscode/
+.idea/
+
+# Build / dist
+/public/build/
+frontend/build/
