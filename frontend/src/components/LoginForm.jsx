@@ -1,47 +1,49 @@
 import { useState } from "react";
-import { login } from "../services/api";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function LoginForm({ onSuccess }) {
+  const { login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+
+  const [error, setError] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError(null);
+    setError("");
 
     try {
-      const data = await login(email, password);
-      localStorage.setItem("token", data.token);
-      onSuccess();
-    } catch (err) {
-      setError(err.message);
+      await login(email, password);   // 🔥 AuthContext login() meghívása
+
+      onSuccess();                    // 🔥 LoginPage átirányítása
+    } 
+    catch (err) {
+      setError(err.message || "Login failed");
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Bejelentkezés</h2>
+    <form className="auth-form" onSubmit={handleSubmit}>
+      <h2>Login</h2>
+
+      {error && <div className="error">{error}</div>}
 
       <input
         type="email"
         placeholder="Email"
         value={email}
-        onChange={e => setEmail(e.target.value)}
-        required
+        onChange={(e) => setEmail(e.target.value)}
       />
 
       <input
         type="password"
-        placeholder="Jelszó"
+        placeholder="Password"
         value={password}
-        onChange={e => setPassword(e.target.value)}
-        required
+        onChange={(e) => setPassword(e.target.value)}
       />
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <button type="submit">Belépés</button>
+      <button type="submit">Log In</button>
     </form>
   );
 }
