@@ -1,4 +1,17 @@
+/* GLOBAL WHITE BACKGROUND */
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
+  padding: 0;
+  background: #ffffff !important;
+  font-family: Arial, sans-serif;
+  color: #000;
+}
+
+/* Grid háttér mint a screenshoton */
+main {
+  background-image: linear-gradient(#e6e6e6 1px, transparent 1px),
+    linear-gradient(90deg, #e6e6e6 1px, transparent 1px);
+  background-size: 20px 20px;
+  min-height: 100vh;
+  padding: 20px;
 }

@@ -1,71 +1,62 @@
 import "./App.css";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
-// OLDALAK (public)
+// PUBLIC
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 
-// OLDALAK (protected - Layout alatt jelennek meg)
+// PROTECTED (Layout alatt)
 import Layout from "./pages/Layout";
 import DashboardPage from "./pages/DashboardPage";
 import CoursesPage from "./pages/CoursesPage";
+import CourseDetailsPage from "./pages/CourseDetailsPage";
 import MentorsPage from "./pages/MentorsPage";
 
 // 404
 import NoPage from "./pages/NoPage";
 
-function App() {
+export default function App() {
   const router = createBrowserRouter([
     // -----------------------------
-    // PUBLIC ROUTES (NINCS védelem)
+    // PUBLIC ROUTES
     // -----------------------------
-    {
-      path: "/login",
-      element: <LoginPage />
-    },
-    {
-      path: "/register",
-      element: <RegistrationPage />
-    },
+    { path: "/login", element: <LoginPage /> },
+    { path: "/register", element: <RegistrationPage /> },
 
     // -----------------------------
     // PROTECTED ROUTES (Layout alatt)
-    // Később ide tesszük majd a token védelmet
     // -----------------------------
     {
       path: "/",
-      element: <Layout />, // <-- A layout tartalmaz Navigation-t + Outlet-et
+      element: <Layout />,
       children: [
-        {
-          index: true,
-          element: <Navigate to="/dashboard" replace />
-        },
-        {
-          path: "dashboard",
-          element: <DashboardPage />
-        },
+        { index: true, element: <Navigate to="/dashboard" replace /> },
+
+        { path: "dashboard", element: <DashboardPage /> },
+
         {
           path: "courses",
-          element: <CoursesPage />
+          children: [
+            {
+              index: true,
+              element: <CoursesPage />,
+            },
+            {
+              path: ":id",
+              element: <CourseDetailsPage />,
+            },
+          ],
         },
-        {
-          path: "mentors",
-          element: <MentorsPage />
-        }
-      ]
+
+        { path: "mentors", element: <MentorsPage /> },
+      ],
     },
 
     // -----------------------------
-    // 404 - Not Found
+    // 404
     // -----------------------------
-    {
-      path: "*",
-      element: <NoPage />
-    }
+    { path: "*", element: <NoPage /> },
   ]);
 
   return <RouterProvider router={router} />;
 }
-
-export default App;
-``
